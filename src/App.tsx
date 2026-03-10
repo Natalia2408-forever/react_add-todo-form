@@ -4,7 +4,7 @@ import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
 import React, { useState } from 'react';
 import { TodoList } from './components/TodoList';
-import { PostForm } from './components/TodoForm/TodoForm';
+import { PostForm } from './components/TodoForm/PostForm';
 import { Todo } from './types/Todo';
 
 function getUserById(userId: number) {
@@ -21,10 +21,6 @@ export const App: React.FC = () => {
 
   const addTodo = ({ title, userId }: { title: string; userId: number }) => {
     const user = getUserById(userId);
-
-    if (!user) {
-      return;
-    }
 
     setTodos(currentTodos => {
       const maxId = currentTodos.length
@@ -46,7 +42,7 @@ export const App: React.FC = () => {
   return (
     <div className="App">
       <h1 className="App__title">Static list of todos</h1>
-      <PostForm onSubmit={addTodo} />
+      <PostForm onSubmit={addTodo} users={usersFromServer} />
       <TodoList todos={todos} />
     </div>
   );

@@ -1,1 +1,1 @@
-export * from './TodoForm';
+export * from './PostForm';

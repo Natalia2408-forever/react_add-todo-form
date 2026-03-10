@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import usersFromServer from '../../api/users';
+import { User } from '../../types/User';
 
 type TodoForm = {
   title: string;
@@ -7,10 +7,11 @@ type TodoForm = {
 };
 
 type Props = {
-  onSubmit: (data: TodoForm) => void;
+  onSubmit: (data: { title: string; userId: number }) => void;
+  users: User[];
 };
 
-export const PostForm: React.FC<Props> = ({ onSubmit }) => {
+export const PostForm: React.FC<Props> = ({ onSubmit, users }) => {
   const [newForm, setNewForm] = useState<TodoForm>({
     title: '',
     userId: '',
@@ -26,7 +27,6 @@ export const PostForm: React.FC<Props> = ({ onSubmit }) => {
         ...prev,
         [field]: event.target.value,
       }));
-
       if (field === 'title') {
         setHasTitleError(false);
       }
@@ -63,7 +63,7 @@ export const PostForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <form action="/api/todos" method="POST" onSubmit={handleSubmit}>
       <div className="field">
-        <label htmlFor="titleInout">Title </label>
+        <label htmlFor="titleInput">Title </label>
         <input
           type="text"
           id="titleInput"
@@ -84,7 +84,7 @@ export const PostForm: React.FC<Props> = ({ onSubmit }) => {
           onChange={handleChange('userId')}
         >
           <option value="">Choose a user</option>
-          {usersFromServer.map(user => (
+          {users.map(user => (
             <option value={user.id} key={user.id}>
               {user.name}
             </option>
