@@ -20,9 +20,8 @@ export const PostForm: React.FC<Props> = ({ onSubmit, users }) => {
   const [hasTitleError, setHasTitleError] = useState(false);
   const [selectError, setSelectError] = useState(false);
 
-  const handleChange =
-    (field: keyof TodoForm) =>
-    (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (field: keyof TodoForm) => {
+    return (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setNewForm(prev => ({
         ...prev,
         [field]: event.target.value,
@@ -35,6 +34,7 @@ export const PostForm: React.FC<Props> = ({ onSubmit, users }) => {
         setSelectError(false);
       }
     };
+  };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
